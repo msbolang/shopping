@@ -1,14 +1,13 @@
 package com.boli.shopping.util;
 
 import java.sql.*;
-import com.mysql.cj.xdevapi.Statement;
 
 public class DB {
 	public static Connection getConn() {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/shopping?user=root&password=root");
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.186.128/shopping?user=root&password=root");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -23,7 +22,6 @@ public class DB {
 		try {
 			pstmt = conn.prepareStatement(sql);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return pstmt;
@@ -34,7 +32,6 @@ public class DB {
 		try {
 			pstmt = conn.prepareStatement(sql,autoGenereatedKeys);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return pstmt;
@@ -44,7 +41,7 @@ public class DB {
 		Statement stmt = null; 
 		try {
 			if(conn != null) {
-				stmt = (Statement) conn.createStatement();
+				stmt = conn.createStatement();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -56,7 +53,7 @@ public class DB {
 		ResultSet rs = null;
 		try {
 			if(stmt != null) {
-				rs = ((java.sql.Statement) stmt).executeQuery(sql);
+				rs = stmt.executeQuery(sql);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -68,10 +65,10 @@ public class DB {
 		
 	    try {
 			if(stmt!=null) {
-				((java.sql.Statement) stmt).executeUpdate(sql);
+			   stmt.executeUpdate(sql);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+	
 			e.printStackTrace();
 		}
 	    
@@ -93,7 +90,7 @@ public class DB {
 	public static void close(Statement stmt) {
 		try {
 			if(stmt != null) {
-				((Connection) stmt).close();
+				stmt.close();
 				stmt = null;
 			}
 		} catch (SQLException e) {
